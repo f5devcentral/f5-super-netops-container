@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo "Reticulating splines..."
+ln -s /usr/bin/sphinx-build-2 /usr/bin/sphinx-build
+
+echo "Becoming self-aware..."
+/snopsboot/cloneGitRepos.sh
+
+chown -Rf snops:snops /home
+
+HOSTIP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+#echo $HOSTIP > /snopsboot/my_ip
+
+cat /etc/motd
+
+/bin/bash --login

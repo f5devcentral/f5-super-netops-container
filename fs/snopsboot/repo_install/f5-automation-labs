@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pip install -r requirements.txt
+cd 1_Introduction
+make html
