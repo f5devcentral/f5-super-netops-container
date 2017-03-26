@@ -20,6 +20,7 @@ RUN chmod +x /usr/sbin/go-dnsmasq
 
 # Start S6 init
 ENTRYPOINT ["/init"]
+CMD ["/start"]
 
 # Add useful APKs
 RUN apk add --update openssh bash curl git python2 py2-requests py2-sphinx py-pip nodejs
