@@ -5,7 +5,8 @@
 
 # Start with an awesome, tiny Linux distro.
 FROM alpine
-MAINTAINER Nathan Pearce, Hitesh Patel
+
+LABEL maintainer "h.patel@f5.com, n.pearce@f5.com"
 
 # setuid so things like ping work
 RUN chmod +s /bin/busybox
