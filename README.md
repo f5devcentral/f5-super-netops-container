@@ -14,4 +14,4 @@ The following command will download the 'f5-super-netops' container, run it,
 remap the SSH and HTTP ports to localhost:2222 and localhost:8080 respectively
 and begin an interactive shell session:
 
-`docker run -p 8080:80 -p 2222:22 --rm -it f5supernetops/f5-super-netops`
+`docker run -p 8080:80 -p 2222:22 -it f5supernetops/f5-super-netops`

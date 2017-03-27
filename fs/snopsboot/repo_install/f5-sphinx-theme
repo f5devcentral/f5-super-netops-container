@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pip install .
+pip install -r requirements.docs.txt

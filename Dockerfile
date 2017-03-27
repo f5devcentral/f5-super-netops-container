@@ -37,6 +37,9 @@ RUN echo 'root:default' | chpasswd
 # Copy in base FS from repo
 COPY fs /
 
+# Development use, copy local repos file into image
+#ADD snops.repos /home/repos
+
 # Expose SSH and HTTP
 EXPOSE 22 80
 

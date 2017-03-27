@@ -8,9 +8,12 @@ fi
 CWD=`pwd`
 
 cd /home
+mkdir -p /home/log
 
-echo "[cloneGitRepos] Retrieving repository list from ${SNOPS_GH_BRANCH}"
-curl -s -o /home/repos https://raw.githubusercontent.com/f5devcentral/f5-super-netops-container/${SNOPS_GH_BRANCH}/snops.repos
+if [ ! -f "/home/repos" ]; then
+	echo "[cloneGitRepos] Retrieving repository list from ${SNOPS_GH_BRANCH}"
+	curl -s -o /home/repos https://raw.githubusercontent.com/f5devcentral/f5-super-netops-container/${SNOPS_GH_BRANCH}/snops.repos
+fi
 
 NUMREPOS=`wc -l /home/repos | cut -d' ' -f1`
 I=1
