@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pip install -r requirements.docs.txt
+cd docs
+make html
+
+echo "<head><meta http-equiv='refresh' content='0;URL=/f5-super-netops-container/docs/_build/html/index.html' /></head>" > /home/__CLICK_TO_START.html

@@ -38,11 +38,20 @@ RUN echo 'root:default' | chpasswd
 COPY fs /
 
 # Development use, copy local repos file into image
-#ADD snops.repos /home/repos
+# ADD snops.repos /home/repos
 
 # Expose SSH and HTTP
 EXPOSE 22 80
 
+# Set our default host redirect ports
+ENV SNOPS_HOST_HTTP 8080
+ENV SNOPS_HOST_SSH  2222
+
 # Enable cloning/install of useful repositories on boot
 ENV SNOPS_AUTOCLONE 1
+
+# The GitHub branch to target for dynamic resources
 ENV SNOPS_GH_BRANCH master
+
+# ENV variable used by various scripts to detect the container environment
+ENV SNOPS_ISALIVE 1

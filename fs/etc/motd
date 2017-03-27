@@ -27,7 +27,7 @@ services running:
 To access these services you may need to remap ports on your host to the
 local container using the command:
 
- docker run -p 8080:80 -p 2222:22 -it f5supernetops/f5-super-netops
+ docker run -p 8080:80 -p 2222:22 -it f5devcentral/f5-super-netops
 
 From the HOST perspective, this results in:
 

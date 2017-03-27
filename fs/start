@@ -8,8 +8,10 @@ echo "Becoming self-aware..."
 
 chown -Rf snops:snops /home
 
-HOSTIP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
-#echo $HOSTIP > /snopsboot/my_ip
+export SNOPS_HOST_IP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+echo "SNOPS_HOST_IP=$SNOPS_HOST_IP" >> /snopsboot/SNOPS_ENV
+echo "SNOPS_HOST_HTTP=$SNOPS_HOST_HTTP" >> /snopsboot/SNOPS_ENV
+echo "SNOPS_HOST_SSH=$SNOPS_HOST_SSH" >> /snopsboot/SNOPS_ENV
 
 cat /etc/motd
 
