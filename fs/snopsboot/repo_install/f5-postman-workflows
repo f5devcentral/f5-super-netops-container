@@ -10,3 +10,5 @@ ln -s /home/f5-postman-workflows/framework/f5-newman-wrapper/f5-newman-wrapper /
 if [ -d /host_share ]; then
 	ln -s /host_share /home/f5-postman-workflows/host_share
 fi
+
+mkdir -p /home/f5-postman-workflows/local
