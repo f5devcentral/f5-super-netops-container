@@ -24,13 +24,13 @@ ENTRYPOINT ["/init"]
 CMD ["/start"]
 
 # Add useful APKs
-RUN apk add --update openssh bash curl git python2 py2-requests py2-sphinx py-pip nodejs
+RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs
 
 # Add node http-server
 RUN npm install -g http-server
 
 # Setup various users and passwords
-RUN adduser -h /home -u 1000 -s /bin/bash snops -D
+RUN adduser -h /home/snops -u 1000 -s /bin/bash snops -D
 RUN echo 'snops:default' | chpasswd
 RUN echo 'root:default' | chpasswd
 
@@ -38,10 +38,16 @@ RUN echo 'root:default' | chpasswd
 COPY fs /
 
 # Development use, copy local repos file into image
-# ADD snops.repos /home/repos
+# ADD snops.repos /home/snops/repos
 
 # Expose SSH and HTTP
 EXPOSE 22 80
+
+# Set Git Credentials
+# !!WARNING!! - password is stored in plaintext
+ENV SNOPS_GIT_USERNAME ""
+ENV SNOPS_GIT_PASSWORD ""
+ENV SNOPS_GIT_HOST "github.com"
 
 # Set our default host redirect ports
 ENV SNOPS_HOST_HTTP 8080
