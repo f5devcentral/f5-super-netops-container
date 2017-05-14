@@ -1,5 +1,5 @@
 ############################################################
-# Dockerfile to build f5-super-netops enablement container
+# Dockerfile to build f5-super-netops:base enablement container
 # Based on Alpine Linux, seasoned with tools and workflows
 ############################################################
 
@@ -7,6 +7,11 @@
 FROM alpine
 
 LABEL maintainer "h.patel@f5.com, n.pearce@f5.com"
+
+ENV SNOPS_REPO https://github.com/f5devcentral/f5-super-netops-container.git
+
+# Set the SNOPS image name
+ENV SNOPS_IMAGE base
 
 # setuid so things like ping work
 RUN chmod +s /bin/busybox
@@ -21,10 +26,13 @@ RUN chmod +x /usr/sbin/go-dnsmasq
 
 # Start S6 init
 ENTRYPOINT ["/init"]
-CMD ["/start"]
+CMD ["/snopsboot/start"]
 
 # Add useful APKs
 RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs
+
+# Upgrade pip
+RUN pip install --upgrade pip
 
 # Add node http-server
 RUN npm install -g http-server
@@ -36,9 +44,6 @@ RUN echo 'root:default' | chpasswd
 
 # Copy in base FS from repo
 COPY fs /
-
-# Development use, copy local repos file into image
-# ADD snops.repos /home/snops/repos
 
 # Expose SSH and HTTP
 EXPOSE 22 80

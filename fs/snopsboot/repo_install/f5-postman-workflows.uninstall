@@ -1,8 +1,0 @@
-#!/bin/bash
-
-cd framework
-cd f5-newman-wrapper
-npm uninstall
-cd ..
-npm uninstall
-

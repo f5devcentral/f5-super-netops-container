@@ -1,0 +1,12 @@
+{
+	"include":["base"],
+	"repos": [
+		{
+			"name":"f5-ansible",
+			"repo":"https://github.com/F5Networks/f5-ansible.git",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
+		}
+	]
+}
