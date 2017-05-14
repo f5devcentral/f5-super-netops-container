@@ -1,5 +1,5 @@
 sudo: required
 services:
-	- docker
+    - docker
 script:
-	- ./build_all.sh
+    - ./build_all.sh
