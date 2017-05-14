@@ -1,0 +1,40 @@
+{
+	"name":"base",
+	"repos": [
+		{
+			"name":"f5-sphinx-theme",
+			"repo":"https://github.com/f5devcentral/f5-sphinx-theme.git",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
+		},
+		{
+			"name":"f5-super-netops-container",
+			"repo":"https://github.com/f5devcentral/f5-super-netops-container.git",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
+		},
+		{
+			"name":"f5-application-services-integration-iApp",
+			"repo":"https://github.com/F5Networks/f5-application-services-integration-iApp.git",
+			"branch":"develop",
+			"skip":false,
+			"skipinstall":false
+		},
+		{
+			"name":"f5-postman-workflows",
+			"repo":"https://github.com/0xHiteshPatel/f5-postman-workflows.git",
+			"branch":"develop",
+			"skip":false,
+			"skipinstall":false
+		},
+		{
+			"name":"f5-automation-labs",
+			"repo":"https://github.com/f5devcentral/f5-automation-labs.git",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
+		}
+	]
+}
