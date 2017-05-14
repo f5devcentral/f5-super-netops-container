@@ -12,6 +12,6 @@ do
 done
 
 echo ""
-echo "All images build successfully"
+echo "All images built successfully"
 
 exit 0
