@@ -1,3 +1,10 @@
+Status
+------
+
+**Master:** |badge_rtd_latest| |badge_travis_master|
+
+**Develop:** |badge_rtd_develop| |badge_travis_develop|
+
 About
 -----
 
@@ -19,3 +26,16 @@ remap the SSH and HTTP ports to localhost:2222 and localhost:8080 respectively
 and begin an interactive shell session:
 
 `docker run -p 8080:80 -p 2222:22 -it f5devcentral/f5-super-netops`
+
+
+.. |badge_travis_master| image:: https://www.travis-ci.org/f5devcentral/f5-super-netops-container.svg?branch=master
+   :target: https://www.travis-ci.org/f5devcentral/f5-super-netops-container
+
+.. |badge_travis_develop| image:: https://www.travis-ci.org/f5devcentral/f5-super-netops-container.svg?branch=develop
+   :target: https://www.travis-ci.org/f5devcentral/f5-super-netops-container
+
+.. |badge_rtd_latest| image:: https://readthedocs.org/projects/f5-super-netops-container/badge/?version=latest
+   :target: http://f5-super-netops-container.readthedocs.io/en/latest/?badge=latest
+
+.. |badge_rtd_develop| image:: https://readthedocs.org/projects/f5-super-netops-container/badge/?version=develop
+   :target: http://f5-super-netops-container.readthedocs.io/en/develop/?badge=develop
