@@ -12,4 +12,4 @@ echo "========================================================="
 echo ""
 
 cd images/$1
-docker build -t f5devcentral/f5-super-netops:$1 .
+docker build -t f5devcentral/f5-super-netops-container:$1 .
