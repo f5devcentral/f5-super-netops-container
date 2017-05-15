@@ -1,5 +1,22 @@
 sudo: required
 services:
     - docker
+env:
+    global:
+        - secure: xFXF2gkS9mavEu0clGjb710rtN1WEUQ74OxFlYf7zNkkJdhqhA0eSydgAPT6HK0R/syUmu2/IpvuqiGcx40d7ZQtPqQ1ylW6byRIOX+Se3yhrPx16YiuXoOSBoyEvLUX/8DdDcQE6fkUQePvg72vuDudJlu0BKttIhSaiKJi7YRrVmAvztXHDRKPUVr9fSVq8sMF+84QPpHd7+cX6kOyz56ala9VAASEmF/0tqO5ocUSChOUHaOlssxY3HjzrokaNoiJ0HAHBp4xU53UZCZwwJhP1M34oQpR/nyQ1dVmGP8cnhmXB8OHoV0FE/7ZHjGb7YEpieV51jnUqgBb/MS5LSMTpYka/wpVpxoq5SoAgRHl3KA+F0YiFySuBLHggYOCcMd9CePJAjN+v+E4ZaZv+I8+pi5pr9xcm0/XlHLAlCmwa5Lz+njK2XmqoGjKnOEMtm7X3QO12lZwWLctuuAuPpaP7bUNRwZGx83l3tKMPkL8jtF294Mw4SJP1KfbA6/wwJtD2M0dTIZchSwmTh0ncY3ZVqyZ7Sg1y/hBfOzKdUBTxaRnCMoVX6CXAtHfAvLnJZXF1HkhI2z9liP7/z0viJA61vrgut9BLS0h7m5nGMJLmqqdP7ppB5T0+/3Dq2dp3tLf+koj9GweEtEEN7xlOpoZ1I/y7+/LMVXxdCHT3Ik=
+        - secure: ohEDewp7oJAyebflFtUtEt8sgVW9Cl4ocqGIDE0CxT7ln9RNiZPiiMgYLuYr5ExsYNy0Keewb6B8gvvDVqM+aqG9Ctic37zgCidGNEdRPeYULttAXXLaYzAV9X4UhqcgBUjTQKZh+/VfxGwI9LrNjVw1oNuwDw30xxSyL5njQ5CUzOIgMR8jBnAUY+QC2lUUlMuQAqsjk76ZSPeUAyhMoUhZ3x9RjtMiBFnqj3DZeEQKHj5kNUho5QkTieQhkfOc5bRm2dB4/KVBcPrtUtHDWTjgkiiTVNMs4Okq+1GcJRH1qYLSaLi6vIVJSbEzXQD4WYsLo5TjHUpfJz1bb3qWp7SId91snqiFKKzmLK4KwfAV9oW9pYh2EkRYsV8f+pHrjbdP1IkwUnJ3TDLCCyJsgxf5DfTLbav7mozO7kdrGs1avwP0pJea3fcK1a3v3aAKSyTjowYeuwokj48KZKjbVwfNlRHiWH69PdrKz6JRZjsGuYZ+ZH7+7gcgUrF1Bf1DnXU6DEBvAX5t6q5BILzMLGN2SABZE40hZVyH07IOFkGq17y6JHmBLSsjTtMeKClxn9p9yOSv7PdGfV6IjpQvbMVvx3o7Q5ECwgwoC1BWZOEMIMZ7cjXsKY/H2DyhOSSXtg2Ok5b5MoyriqdVO/UYK6h2qvRX3pQ7oKwBlsaCAHE=
+        - COMMIT=${TRAVIS_COMMIT::8}
 script:
+    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+    - export DOCKER_REPO=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_REPO_SLUG; else echo $TRAVIS_PULL_REQUEST_SLUG; fi)
+    - export DOCKER_REPO=`echo "$DOCKER_REPO" | tr '[:upper:]' '[:lower:]'`
+    - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH PR=$PR BRANCH=$BRANCH DOCKER_REPO=$DOCKER_REPO"
     - ./build_all.sh
+after_success:
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS
+    - docker images
+    - . images/IMAGE_LIST
+    - export TAG_PREFIX=$(if [ "$BRANCH" == "master" ]; then echo ""; else echo "$BRANCH-"; fi)
+    - for image in $IMAGE_LIST; do echo "Tagging $image with $DOCKER_REPO:$TAG_PREFIX$image"; docker tag f5devcentral/f5-super-netops:$image $DOCKER_REPO:$TAG_PREFIX$image; done
+    - docker images
+    - for image in $IMAGE_LIST; do echo "Pushing $DOCKER_REPO:$TAG_PREFIX$image"; docker push $DOCKER_REPO:$TAG_PREFIX$image; done
