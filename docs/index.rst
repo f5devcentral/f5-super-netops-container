@@ -10,6 +10,7 @@ Welcome to f5-super-netops Container's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   README
 
 
 Indices and tables

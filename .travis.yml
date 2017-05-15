@@ -1,0 +1,17 @@
+sudo: required
+services:
+    - docker
+env:
+    global:
+        - secure: uf49NXlyVsOlVxVuHjU3ESKlJzeJ6KZCjhG6aiWX1Miz4RQhdGxjmG99vL86KvLFlIqnoBRXGJ9r4I6vm3ApI14vvoXMBF63r482PYdlm+Ciw4lGt3gxGFX1STGWnHSMeF4a07MVIkQbPkJlbmFnA2+SlvXIm6IoYkf0gbmrnlQY4FHraREdzBKIOc7KLgQHwGnH9BFsCJVKCi+8MaSJLSXTe+GASNGyegknHTgtXHzIp2cWDMvZl03BVVPtB7Jh5fszc1RQc3775Ag7nqW16aUJt1VXRjDDoNZHvwgWDuVbTp7SUJI0KQaUUnMkToz4tGKTwm/UQPncBQ+BBXZ9d9hOk+YfHN6oX3p59/Yn5x6k0Ba3cNXA+J7UE9yIw7zFRLKAf+q03mpaFBfayBSWZUeocoFS+Nvxa97tcvg+UZwo9gHImZsdLL6qLSyMCUYgXMFSvT3P7/H7JiwfGM20hl+1KizbZ+uGKyBuXk2j9sAJCJ07xMGiO4rFHF4u6Oh+nt5l9Vo6zdSNHGBC13/+1KEmmGA7uEGDyq7B+qNBMesT+ko2uRc1WGTOT6Yk/mVFtuZDVbf0I47vSS8jWbwM0W6NVE+IaVkYhY0TNvGTOPHrkXVKCvVVmDY0Mrsk15GmMCP3G+EyOvsXV0Vz4qC+GrPpvvNYt1KQGPFHeLxJGgg=
+        - secure: pJnF7nv7pqgCP2zse3digfV648WLY+RvO5ApzS7QPxw9JpZFe/JTtj2mIHd1xNQ+oWxt8+QqRUvlaK3jjyBi5AQB7pRNVNEDbWDcf3LxqYg/GgrYqKhtT0mpRjzYE8Gr8hRLFStqEVjLY0lFFFn7ef1pqtDT+Vsj4RQT90CKy+5IyjeizDNCxh4liSAznR3t7ujP3cKmnB/rtRJ7+sZS7WO5FpUy0da6CikdTi0gicRO9gE04zq1BCOw523XA4U7oHAsdBp98mbioI5QcfW9nZzKmil4QXSLu66qZ9qG/Jr6VUyqqUzBgm52McRSgs4DYbntHEX8dtOv/zIpBVdY8tzVs+CWT3kFcp4lAfOlt8eBMpoJv+bu/yiCfgsX2nlH8xhc30PYk91Bcnr5lU90+9kyJVgAB0VnmY56kmbVUUQM2OCjvAnVn+G9GB+W6MWknO/nRoThJt6RuH7gBXyux4KQyn+4v+rR9TGPOiiS390coc9G7Y49lt8XDiKW9HFnCV0dbDVBK7iajuM4FKoV4Ym0iZhv7XkpQ8wSCpZ8A9/Wv7E35S6nbJKrUq85hYz5+/VFj3tRnzODk0A8Z8qJnOpacssTZBUaMK9QWqA2aaLEvp+Xl+mMmDFmqGeT7QjzVpPN8Z/ozuItThheutZ78sHKPvgtzf1NQBkfuur7Za8=
+        - COMMIT=${TRAVIS_COMMIT::8}
+script:
+    - export BRANCH=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_BRANCH; else echo $TRAVIS_PULL_REQUEST_BRANCH; fi)
+    - export DOCKER_REPO=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then echo $TRAVIS_REPO_SLUG; else echo $TRAVIS_PULL_REQUEST_SLUG; fi)
+    - export DOCKER_REPO=`echo "$DOCKER_REPO" | tr '[:upper:]' '[:lower:]'`
+    - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH PR=$PR BRANCH=$BRANCH DOCKER_REPO=$DOCKER_REPO"
+    - ./build_all.sh
+after_success:
+    - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./scripts/travis_pull_request.sh; fi'
+    - 'if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash ./scripts/travis_non_pull_request.sh; fi'
