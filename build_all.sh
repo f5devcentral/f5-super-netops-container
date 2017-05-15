@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IMAGE_LIST="base ansible"
+. images/IMAGE_LIST
 
 for image in $IMAGE_LIST
 do
