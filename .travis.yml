@@ -13,10 +13,5 @@ script:
     - echo "TRAVIS_BRANCH=$TRAVIS_BRANCH PR=$PR BRANCH=$BRANCH DOCKER_REPO=$DOCKER_REPO"
     - ./build_all.sh
 after_success:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - docker images
-    - . images/IMAGE_LIST
-    - export TAG_PREFIX=$(if [ "$BRANCH" == "master" ]; then echo ""; else echo "$BRANCH-"; fi)
-    - for image in $IMAGE_LIST; do echo "Tagging $image with $DOCKER_REPO:$TAG_PREFIX$image"; docker tag f5devcentral/f5-super-netops:$image $DOCKER_REPO:$TAG_PREFIX$image; done
-    - docker images
-    - for image in $IMAGE_LIST; do echo "Pushing $DOCKER_REPO:$TAG_PREFIX$image"; docker push $DOCKER_REPO:$TAG_PREFIX$image; done
+    - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./scripts/travis_pull_request.sh; fi'
+    - 'if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then bash ./scripts/travis_non_pull_request.sh; fi'
