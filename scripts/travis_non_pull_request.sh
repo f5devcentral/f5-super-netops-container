@@ -10,7 +10,7 @@ export TAG_PREFIX=$(if [ "$BRANCH" == "master" ]; then echo ""; else echo "$BRAN
 for image in $IMAGE_LIST
 do
 	echo "Tagging $image with $DOCKER_REPO:$TAG_PREFIX$image"
-	docker tag f5devcentral/f5-super-netops:$image $DOCKER_REPO:$TAG_PREFIX$image
+	docker tag f5devcentral/f5-super-netops-container:$image $DOCKER_REPO:$TAG_PREFIX$image
 done
 
 docker images
