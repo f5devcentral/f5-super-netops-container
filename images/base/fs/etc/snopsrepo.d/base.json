@@ -35,6 +35,14 @@
 			"branch":"master",
 			"skip":false,
 			"skipinstall":false
+		},
+		{
+			"name":"ultimate-vimrc",
+			"repo":"https://github.com/amix/vimrc.git",
+			"localdir":"/etc/vim/vim_runtime",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
 		}
 	]
 }
