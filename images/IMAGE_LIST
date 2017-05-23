@@ -1,1 +1,1 @@
-export IMAGE_LIST="base ansible"
+export IMAGE_LIST="base ansible jenkins"
