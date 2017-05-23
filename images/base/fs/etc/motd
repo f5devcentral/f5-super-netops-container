@@ -18,7 +18,7 @@
           | |                                          | |
           |_|                                          |_|
 
-Welcome to the f5-super-netops Container.  This container has the following
+Welcome to the f5-super-netops-container.  This image has the following
 services running:
 
  SSH  tcp/22
@@ -27,12 +27,12 @@ services running:
 To access these services you may need to remap ports on your host to the
 local container using the command:
 
- docker run -p 8080:80 -p 2222:22 -it f5devcentral/f5-super-netops
+ docker run -p 8080:80 -p 2222:22 -it f5devcentral/f5-super-netops-container:base
 
 From the HOST perspective, this results in:
 
- localhost:2222 -> f5-super-netops:22
- localhost:8080 -> f5-super-netops:80
+ localhost:2222 -> f5-super-netops-container:22
+ localhost:8080 -> f5-super-netops-container:80
 
 You can then connect using the following:
 
