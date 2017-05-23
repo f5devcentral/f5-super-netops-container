@@ -20,7 +20,16 @@ echo "SNOPS_HOST_SSH=$SNOPS_HOST_SSH" >> /snopsboot/SNOPS_ENV
 export CONTAINER_ID=`cat /proc/self/cgroup | grep "cpu:/" | sed 's/\([0-9]\):cpu:\/docker\///g'`
 echo "CONTAINER_ID=$CONTAINER_ID" > /snopsboot/SNOPS_ENV
 
+if [ -f /snopsboot/${SNOPS_IMAGE}-pre.sh ]; then
+	. /snopsboot/${SNOPS_IMAGE}-pre.sh
+fi
+
 cat /etc/motd
+
+if [ -f /snopsboot/${SNOPS_IMAGE}-post.sh ]; then
+	. /snopsboot/${SNOPS_IMAGE}-post.sh
+fi
+
 echo ""
 echo "(you can now detach by using Ctrl+P+Q)"
 echo ""
