@@ -52,16 +52,18 @@ for i in range(0, numrepos):
 		print "%s Skipping %s#%s" % (prefix, obj["name"], obj["branch"])
 		continue
 
-	localdir = '/home/snops/%s' % obj["name"]
-	if os.path.isdir(localdir):
+	if 'localdir' not in obj:
+		obj["localdir"] = '/home/snops/%s' % obj["name"]
+
+	if os.path.isdir(obj["localdir"]):
 		print "%s Pulling %s#%s from %s" % (prefix, obj["name"], obj["branch"], obj["repo"])
-		exitcode = call(['git','pull'], shell=False, stdout=log, stderr=log, cwd=localdir)
+		exitcode = call(['git','pull'], shell=False, stdout=log, stderr=log, cwd=obj["localdir"])
 		if exitcode > 0:
 			print "ERROR: Pull of %s failed, exiting..." % obj["name"]
 			sys.exit(1)
 	else:
 		print "%s Cloning %s#%s from %s" % (prefix, obj["name"], obj["branch"], obj["repo"])
-		gitcmd = 'git clone -b %s %s %s' % (obj["branch"], obj["repo"], localdir)
+		gitcmd = 'git clone -b %s %s %s' % (obj["branch"], obj["repo"], obj["localdir"])
 		debug("gitcmd=%s" % gitcmd)
 		exitcode = call(gitcmd.split(), shell=False, stdout=log, stderr=log)
 		if exitcode > 0:
@@ -74,13 +76,13 @@ for i in range(0, numrepos):
 
 	if os.path.exists(os.path.join(os.path.sep, 'snopsboot','repo_install',obj["name"])):
 		try:
-		    install_log = open('/home/snops/%s/repo_install.log' % obj["name"], 'a')
+		    install_log = open('%s/repo_install.log' % obj["localdir"], 'a')
 		except IOError as e:
 		   print "Open of install log file failed({0}): {1}".format(e.errno, e.strerror)
 		   sys.exit(1)
 
 		print "%s  Installing %s#%s" % (prefix, obj["name"], obj["branch"])
-		exitcode = call(['/snopsboot/repo_install/%s' % obj["name"]], shell=False, stdout=install_log, stderr=install_log, cwd=localdir)
+		exitcode = call(['/snopsboot/repo_install/%s' % obj["name"]], shell=False, stdout=install_log, stderr=install_log, cwd=obj["localdir"])
 		install_log.close()
 		if exitcode > 0:
 			print "ERROR: Install of %s failed(%s), exiting..." % (obj["name"], exitcode)
