@@ -29,7 +29,7 @@ ENTRYPOINT ["/init"]
 CMD ["/snopsboot/start"]
 
 # Add useful APKs
-RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs
+RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs nodejs-npm
 
 # Upgrade pip
 RUN pip install --upgrade pip
@@ -66,3 +66,5 @@ ENV SNOPS_GH_BRANCH master
 
 # ENV variable used by various scripts to detect the container environment
 ENV SNOPS_ISALIVE 1
+
+RUN chmod 777 /tmp
