@@ -66,3 +66,5 @@ ENV SNOPS_GH_BRANCH master
 
 # ENV variable used by various scripts to detect the container environment
 ENV SNOPS_ISALIVE 1
+
+RUN chmod 777 /tmp
