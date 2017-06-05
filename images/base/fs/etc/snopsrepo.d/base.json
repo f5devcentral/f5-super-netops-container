@@ -43,6 +43,13 @@
 			"branch":"master",
 			"skip":false,
 			"skipinstall":false
+		},
+		{
+			"name":"reveal-js",
+			"repo":"https://github.com/hakimel/reveal.js.git",
+			"branch":"master",
+			"skip":false,
+			"skipinstall":false
 		}
 	]
 }

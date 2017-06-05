@@ -67,4 +67,10 @@ ENV SNOPS_GH_BRANCH master
 # ENV variable used by various scripts to detect the container environment
 ENV SNOPS_ISALIVE 1
 
+# Enabled if you would like a dev install of reveal-js
+ENV SNOPS_REVEALJS_DEV 0
+
+# Expose reveal-js dev server port
+EXPOSE 8000
+
 RUN chmod 777 /tmp

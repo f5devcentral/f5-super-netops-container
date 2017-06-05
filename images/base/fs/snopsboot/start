@@ -1,5 +1,19 @@
 #!/bin/bash
 
+
+export SNOPS_HOST_IP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+export CONTAINER_ID=`cat /proc/self/cgroup | grep "cpu:/" | sed 's/\([0-9]\):cpu:\/docker\///g'`
+echo "CONTAINER_ID=$CONTAINER_ID" > /snopsboot/SNOPS_ENV
+
+for e in `env`
+do
+	if [[ $e == SNOPS_* ]]
+	then
+		echo "[environment] $e"
+		echo $e >> /snopsboot/SNOPS_ENV
+	fi
+done
+
 echo "Reticulating splines..."
 ln -s /usr/bin/sphinx-build-2 /usr/bin/sphinx-build
 
@@ -10,15 +24,11 @@ echo "Becoming self-aware..."
 rm -f /usr/bin/vi
 ln -s /usr/bin/vim /usr/bin/vi
 
+if [ -d /host_share ]; then
+	ln -s /host_share /home/snops/host_share
+fi
+
 chown -Rf snops:snops /home/snops
-
-export SNOPS_HOST_IP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
-echo "SNOPS_HOST_IP=$SNOPS_HOST_IP" >> /snopsboot/SNOPS_ENV
-echo "SNOPS_HOST_HTTP=$SNOPS_HOST_HTTP" >> /snopsboot/SNOPS_ENV
-echo "SNOPS_HOST_SSH=$SNOPS_HOST_SSH" >> /snopsboot/SNOPS_ENV
-
-export CONTAINER_ID=`cat /proc/self/cgroup | grep "cpu:/" | sed 's/\([0-9]\):cpu:\/docker\///g'`
-echo "CONTAINER_ID=$CONTAINER_ID" > /snopsboot/SNOPS_ENV
 
 if [ -f /snopsboot/${SNOPS_IMAGE}-pre.sh ]; then
 	. /snopsboot/${SNOPS_IMAGE}-pre.sh
