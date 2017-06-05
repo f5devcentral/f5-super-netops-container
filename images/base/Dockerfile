@@ -29,7 +29,7 @@ ENTRYPOINT ["/init"]
 CMD ["/snopsboot/start"]
 
 # Add useful APKs
-RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs
+RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs nodejs-npm
 
 # Upgrade pip
 RUN pip install --upgrade pip
