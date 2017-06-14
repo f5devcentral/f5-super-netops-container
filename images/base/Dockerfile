@@ -18,7 +18,7 @@ RUN chmod +s /bin/busybox
 
 # Add in S6 overlay so we can run some services
 ADD https://github.com/just-containers/s6-overlay/releases/download/v1.19.1.1/s6-overlay-x86.tar.gz /tmp/
-RUN gunzip -c /tmp/s6-overlay-x86.tar.gz | tar -xf - -C /
+RUN gunzip -c /tmp/s6-overlay-x86.tar.gz | tar -xf - -C / && rm -f /tmp/s6-overlay-x86.tar.gz
 
 # Add go-dnsmasq so resolver works
 ADD https://github.com/janeczku/go-dnsmasq/releases/download/1.0.7/go-dnsmasq-min_linux-amd64 /usr/sbin/go-dnsmasq

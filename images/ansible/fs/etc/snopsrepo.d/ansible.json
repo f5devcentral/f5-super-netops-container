@@ -1,10 +1,21 @@
 {
 	"include":["base"],
+	"name":"ansible",
 	"repos": [
 		{
 			"name":"f5-ansible",
 			"repo":"https://github.com/F5Networks/f5-ansible.git",
 			"branch":"master",
+			"docs": [
+				{
+					"name":"User Guide",
+					"url":"/f5-ansible/docs/_build/html/"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"cd docs && make html"
+			],
 			"skip":false,
 			"skipinstall":false
 		}

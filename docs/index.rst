@@ -1,21 +1,14 @@
-.. f5-super-netops Container documentation master file, created by
-   sphinx-quickstart on Mon Mar 27 09:46:27 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+Welcome to the f5-super-netops-container!
+=========================================
 
-Welcome to f5-super-netops Container's documentation!
-=====================================================
+You are currently running the |snops_image| image.
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+All documentation included with this image is derived from the repositories
+installed within it.  Please refer to the table below to view documentation
+for each repository.
 
-   README
+This image has the following repositories installed:
 
+.. include:: repos.rst
 
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. include:: README.rst

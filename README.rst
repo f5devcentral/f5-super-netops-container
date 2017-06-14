@@ -1,3 +1,6 @@
+README
+======
+
 Status
 ------
 
@@ -9,10 +12,14 @@ About
 -----
 
 Super-NetOps is the new NetOps. This repo supports and auto-build integration
-with Docker Hub. To use the Super-NetOps container, visit:
-https://hub.docker.com/r/f5devcentral/f5-super-netops-container/
+with Docker Hub.
 
-To learn more about Super-NetOps, read 'Does DevOps need a Super-NetOps': https://redtalks.live/2016/11/04/does-devops-need-a-super-netops/
+Docker Repo: https://hub.docker.com/r/f5devcentral/f5-super-netops-container/
+GitHub Repo: https://github.com/f5devcentral/f5-super-netops-container
+
+To learn more about Super-NetOps, read 'Does DevOps need a Super-NetOps':
+
+https://redtalks.live/2016/11/04/does-devops-need-a-super-netops/
 
 Use
 ---
