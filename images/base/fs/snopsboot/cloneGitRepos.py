@@ -56,6 +56,14 @@ for i in range(0, numrepos):
 	if 'localdir' not in obj:
 		obj["localdir"] = '/home/snops/%s' % obj["name"]
 
+	if type(obj["branch"]) is dict:
+		if 'env' in obj["branch"] and obj["branch"]["env"] in os.environ:
+			obj["branch"] = os.environ.get(obj["branch"]["env"])
+		elif 'default' in obj["branch"]:
+			obj["branch"] = obj["branch"]["default"]
+		else:
+			obj["branch"] = "master"
+
 	if os.path.isdir(obj["localdir"]):
 		print "%s Pulling %s#%s from %s" % (prefix, obj["name"], obj["branch"], obj["repo"])
 		exitcode = call(['git','pull'], shell=False, stdout=log, stderr=log, cwd=obj["localdir"])
