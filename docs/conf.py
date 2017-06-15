@@ -21,6 +21,7 @@
 # sys.path.insert(0, os.path.abspath('.'))
 import f5_sphinx_theme
 import json
+import subprocess
 
 # -- General configuration ------------------------------------------------
 
@@ -159,10 +160,17 @@ for repo in repo_dict['repos']:
         for item in repo['docs']:
             links.append('`%s <%s>`__' % (item['name'], item['url']))
 
+    if 'localdir' not in repo:
+        repo["localdir"] = '/home/snops/%s' % repo["name"]
+
+    branch = ""
+    proc = subprocess.Popen(['/bin/bash','-c','git -C %s rev-parse --abbrev-ref HEAD' % repo['localdir']], stdout=subprocess.PIPE)
+    branch = proc.stdout.read()
+
     repo_list += """
    * - %s
      - %s
-     - %s#%s""" % (repo['name'], ' | '.join(links), repo['repo'], repo['branch'])
+     - %s/tree/%s""" % (repo['name'], ' | '.join(links), repo['repo'].replace('.git',''), branch)
 
 repo_list += "\n\n"
 
