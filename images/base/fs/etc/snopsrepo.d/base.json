@@ -5,13 +5,40 @@
 			"name":"f5-sphinx-theme",
 			"repo":"https://github.com/f5devcentral/f5-sphinx-theme.git",
 			"branch":"master",
+			"docs": [
+				{
+					"name":"README",
+					"url":"https://github.com/f5devcentral/f5-sphinx-theme/blob/master/README.rst"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"pip install -r requirements.txt && pip install ."
+			],
 			"skip":false,
 			"skipinstall":false
 		},
 		{
 			"name":"f5-super-netops-container",
 			"repo":"https://github.com/f5devcentral/f5-super-netops-container.git",
-			"branch":"master",
+			"branch": {
+				"env":"SNOPS_GH_BRANCH",
+				"default":"master"
+			},
+			"docs": [
+				{
+					"name":"This Page",
+					"url":"/f5-super-netops-container/docs/_build/html/index.html"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"pip install -r requirements.docs.txt",
+				"cd docs && make html",
+				"echo \"<head><meta http-equiv='refresh' content='0;URL=/f5-super-netops-container/docs/_build/html/index.html' /></head>\" > /home/snops/__CLICK_TO_START.html",
+				"mkdir -p /home/snops/start",
+				"echo \"<head><meta http-equiv='refresh' content='0;URL=/f5-super-netops-container/docs/_build/html/index.html' /></head>\" > /home/snops/start/index.html"
+			],
 			"skip":false,
 			"skipinstall":false
 		},
@@ -19,6 +46,16 @@
 			"name":"f5-application-services-integration-iApp",
 			"repo":"https://github.com/F5Networks/f5-application-services-integration-iApp.git",
 			"branch":"develop",
+			"docs": [
+				{
+					"name":"User Guide",
+					"url":"/f5-application-services-integration-iApp/docs/_build/html/"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"pip install -r requirements.docs.txt && ./build.py"
+			],
 			"skip":false,
 			"skipinstall":false
 		},
@@ -26,6 +63,24 @@
 			"name":"f5-postman-workflows",
 			"repo":"https://github.com/0xHiteshPatel/f5-postman-workflows.git",
 			"branch":"develop",
+			"docs": [
+				{
+					"name":"Lab Guide",
+					"url":"/f5-automation-labs/docs/_build/html/class1/module4/module4.html"
+				},
+				{
+					"name":"Developer Reference",
+					"url":"/f5-postman-workflows/framework/docs/"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"cd framework && npm install && npm run build",
+				"cd f5-newman-wrapper && npm install",
+				"ln -s /home/snops/f5-postman-workflows/framework/f5-newman-wrapper/f5-newman-wrapper /usr/bin/f5-newman-wrapper",
+				"if [ -d /host_share ]; then ln -s /host_share /home/snops/f5-postman-workflows/host_share; fi",
+				"mkdir -p /home/snops/f5-postman-workflows/local"
+			],
 			"skip":false,
 			"skipinstall":false
 		},
@@ -33,6 +88,16 @@
 			"name":"f5-automation-labs",
 			"repo":"https://github.com/f5devcentral/f5-automation-labs.git",
 			"branch":"master",
+			"docs": [
+				{
+					"name":"Lab Guide",
+					"url":"/f5-automation-labs/docs/_build/html/"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"pip install -r requirements.txt && cd docs && make html"
+			],
 			"skip":false,
 			"skipinstall":false
 		},
@@ -41,6 +106,55 @@
 			"repo":"https://github.com/amix/vimrc.git",
 			"localdir":"/etc/vim/vim_runtime",
 			"branch":"master",
+			"docs": [
+				{
+					"name":"README",
+					"url":"https://github.com/amix/vimrc/blob/master/README.md"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"set -e",
+				"cd /etc/vim/vim_runtime",
+				"echo 'set runtimepath+=/etc/vim/vim_runtime",
+				"source /etc/vim/vim_runtime/vimrcs/basic.vim",
+				"source /etc/vim/vim_runtime/vimrcs/filetypes.vim",
+				"source /etc/vim/vim_runtime/vimrcs/plugins_config.vim",
+				"source /etc/vim/vim_runtime/vimrcs/extended.vim",
+				"try",
+				"source /etc/vim/vim_runtime/my_configs.vim",
+				"catch",
+				"endtry' > /etc/vim/vimrc.ultimate",
+				"echo 'set background=light",
+				"set number",
+				"set background=dark' > /etc/vim/vim_runtime/my_configs.vim",
+				"ln -s /etc/vim/vimrc.ultimate /root/.vimrc",
+				"ln -s /etc/vim/vimrc.ultimate /home/snops/.vimrc",
+				"echo 'Installed the Ultimate Vim configuration successfully! Enjoy :-)'"
+			],
+			"skip":false,
+			"skipinstall":false
+		},
+		{
+			"name":"reveal-js",
+			"repo":"https://github.com/hakimel/reveal.js.git",
+			"branch":"master",
+			"docs": [
+				{
+					"name":"Demo",
+					"url":"http://lab.hakim.se/reveal-js/#/"
+				},
+				{
+					"name":"README",
+					"url":"https://github.com/hakimel/reveal.js/blob/master/README.md"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"echo \"SNOPS_REVEALJS_DEV=$SNOPS_REVEALJS_DEV\"",
+				"for i in css js lib plugin; do echo \"Linking /home/snops/$i to /home/snops/reveal-js/$i\"; ln -s /home/snops/reveal-js/$i /home/snops; done",
+				"if [ $SNOPS_REVEALJS_DEV == 1 ]; then echo \"Installing Reveal.js Dev Tools...\"; apk add g++; npm install; npm start & fi"
+			],
 			"skip":false,
 			"skipinstall":false
 		}

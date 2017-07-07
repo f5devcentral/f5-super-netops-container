@@ -20,6 +20,8 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 import f5_sphinx_theme
+import json
+import subprocess
 
 # -- General configuration ------------------------------------------------
 
@@ -54,8 +56,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'f5-super-netops Container'
-copyright = u'2017, Hitesh Patel'
-author = u'Hitesh Patel'
+copyright = u'2017, F5 Networks'
+author = u'F5 Networks'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -118,6 +120,63 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
 
+snops_env = {}
+
+rst_prolog = ""
+
+with open('/snopsboot/SNOPS_ENV', 'r') as env:
+    for line in env:
+        name, var = line.partition("=")[::2]
+        snops_env[name.strip()] = var.strip()
+
+for key in snops_env.keys():
+    if 'password' not in key.lower():
+        rst_prolog += ".. |%s| replace:: ``%s``\n" % (key.lower(), snops_env[key])
+
+try:
+    repo_file = open('/home/snops/repos.json')
+except IOError as error:
+    print "Open of file \"%s\" failed: %s" % (filename, error)
+    sys.exit(1)
+
+try:
+    repo_dict = json.load(repo_file)
+except (ValueError, NameError) as error:
+    print "JSON format error in file \"%s\": %s" % (args.filename, error)
+    sys.exit(1)
+
+repo_list = """
+.. list-table:: Installed Repositories
+   :header-rows: 1
+   :widths: 30 30 40
+
+   * - Name
+     - Documentation
+     - Repository/Branch"""
+
+for repo in repo_dict['repos']:
+    links = []
+    if 'docs' in repo and len(repo['docs']) > 0:
+        for item in repo['docs']:
+            links.append('`%s <%s>`__' % (item['name'], item['url']))
+
+    if 'localdir' not in repo:
+        repo["localdir"] = '/home/snops/%s' % repo["name"]
+
+    branch = ""
+    proc = subprocess.Popen(['/bin/bash','-c','git -C %s rev-parse --abbrev-ref HEAD' % repo['localdir']], stdout=subprocess.PIPE)
+    branch = proc.stdout.read()
+
+    repo_list += """
+   * - %s
+     - %s
+     - %s/tree/%s""" % (repo['name'], ' | '.join(links), repo['repo'].replace('.git',''), branch)
+
+repo_list += "\n\n"
+
+with open('repos.rst', 'w') as rst:
+    rst.write(repo_list)
+    rst.close()
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -132,7 +191,7 @@ html_theme = 'f5_sphinx_theme'
 # documentation.
 #
 # html_theme_options = {}
-html_theme_options = {'site_name': 'f5-super-netops Container'}
+html_theme_options = {'site_name': 'f5-super-netops-container'}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = f5_sphinx_theme.get_html_theme_path()
