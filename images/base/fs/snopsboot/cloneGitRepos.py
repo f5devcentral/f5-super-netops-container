@@ -39,6 +39,8 @@ except (ValueError, NameError) as error:
 	print "[cloneGitRepos][error] JSON format error in file \"%s\": %s" % (args.filename, error)
 	sys.exit(1)
 
+repo_file.close()
+
 debug(json.dumps(repo_dict, indent=1))
 
 numrepos = len(repo_dict["repos"])
@@ -106,6 +108,6 @@ for i in range(0, numrepos):
 
 	i += 1
 
-done = open('/snopsboot/SNOPS_ENV', 'a')
+done = safe_open('/snopsboot/SNOPS_ENV', 'a')
 done.write('SNOPS_CLONE_DONE=1\n')
 done.close()

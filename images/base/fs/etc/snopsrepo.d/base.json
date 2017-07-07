@@ -28,7 +28,7 @@
 			"docs": [
 				{
 					"name":"This Page",
-					"url":"/f5-super-netops-container/docs/_build/"
+					"url":"/f5-super-netops-container/docs/_build/html/index.html"
 				}
 			],
 			"install": [

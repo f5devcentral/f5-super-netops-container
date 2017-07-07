@@ -4,7 +4,7 @@
 ############################################################
 
 # Start with an awesome, tiny Linux distro.
-FROM alpine
+FROM alpine:3.5
 
 LABEL maintainer "h.patel@f5.com, n.pearce@f5.com"
 
@@ -29,7 +29,8 @@ ENTRYPOINT ["/init"]
 CMD ["/snopsboot/start"]
 
 # Add useful APKs
-RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs nodejs-npm
+#RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs nodejs-npm
+RUN apk add --update openssh bash curl git vim nano python2 py2-requests py2-sphinx py-pip nodejs
 
 # Upgrade pip
 RUN pip install --upgrade pip
