@@ -45,7 +45,7 @@
 		{
 			"name":"f5-application-services-integration-iApp",
 			"repo":"https://github.com/F5Networks/f5-application-services-integration-iApp.git",
-			"branch":"develop",
+			"branch":"master",
 			"docs": [
 				{
 					"name":"User Guide",
