@@ -5,7 +5,7 @@
 		{
 			"name":"f5-ansible",
 			"repo":"https://github.com/F5Networks/f5-ansible.git",
-			"branch":"master",
+			"branch":"devel",
 			"docs": [
 				{
 					"name":"User Guide",
@@ -14,6 +14,7 @@
 			],
 			"install": [
 				"#!/bin/bash",
+				"pip install -r requirements.readthedocs.txt",
 				"cd docs && make html"
 			],
 			"skip":false,
