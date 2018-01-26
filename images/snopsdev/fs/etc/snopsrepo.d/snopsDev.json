@@ -1,0 +1,25 @@
+{
+	"include":["base"],
+	"name":"snopsdev",
+	"repos": [
+		{
+			"name":"f5-ansible",
+			"repo":"https://github.com/F5Networks/f5-ansible.git",
+			"branch":"devel",
+			"docs": [
+				{
+					"name":"User Guide",
+					"url":"/f5-ansible/docs/_build/html/"
+				}
+			],
+			"install": [
+				"#!/bin/bash",
+				"pip install -r requirements.readthedocs.txt",
+				"cd docs && make html"
+			],
+			"skip":false,
+			"skipinstall":false
+		}
+	]
+}
+
