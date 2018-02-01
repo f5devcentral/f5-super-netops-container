@@ -90,6 +90,16 @@ RUN pip install ansible==2.4.1 bigsuds f5-sdk netaddr deepdiff ansible-lint ansi
 #install boto3 for AWS management via ansible 
 RUN pip install boto3
 
+#install boto for some python scripts that use this version 
+RUN pip install boto
+
+#install aws cli 
+RUN pip install awscli --upgrade
+
 #install ansible[azure] to manage azure 
 RUN pip install ansible[azure]
+
+#install xmltodict for ansible examples from f5devcentral
+RUN pip install xmltodict
+
 
