@@ -1,4 +1,0 @@
-#!/bin/sh
-
-ssh-keygen -A > /dev/null
-/usr/sbin/sshd
