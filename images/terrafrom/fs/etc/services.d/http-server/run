@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv sh
+
+/usr/bin/http-server /home/snops -p 80 -c-1 >> /var/log/http-server.log 2>&1
