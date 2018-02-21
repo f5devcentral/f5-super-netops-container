@@ -1,0 +1,47 @@
+#!/bin/bash
+
+
+export SNOPS_HOST_IP=`/sbin/ifconfig eth0 | awk '/inet addr/{print substr($2,6)}'`
+export CONTAINER_ID=`cat /proc/self/cgroup | grep "cpu:/" | sed 's/\([0-9]\):cpu:\/docker\///g'`
+echo "CONTAINER_ID=$CONTAINER_ID" > /snopsboot/SNOPS_ENV
+
+for e in `env`
+do
+	if [[ $e == SNOPS_* ]]
+	then
+		echo "[environment] $e"
+		echo $e >> /snopsboot/SNOPS_ENV
+	fi
+done
+
+echo "Reticulating splines..."
+ln -s /usr/bin/sphinx-build-2 /usr/bin/sphinx-build
+
+echo "Becoming self-aware..."
+/snopsboot/cloneGitRepos.sh
+/snopsboot/cacheGitCredentials.sh
+
+rm -f /usr/bin/vi
+ln -s /usr/bin/vim /usr/bin/vi
+
+if [ -d /host_share ]; then
+	ln -s /host_share /home/snops/host_share
+fi
+
+chown -Rf snops:snops /home/snops
+
+if [ -f /snopsboot/${SNOPS_IMAGE}-pre.sh ]; then
+	. /snopsboot/${SNOPS_IMAGE}-pre.sh
+fi
+
+cat /etc/motd
+
+if [ -f /snopsboot/${SNOPS_IMAGE}-post.sh ]; then
+	. /snopsboot/${SNOPS_IMAGE}-post.sh
+fi
+
+echo ""
+echo "(you can now detach by using Ctrl+P+Q)"
+echo ""
+
+/bin/bash --login
