@@ -109,22 +109,18 @@ RUN set -eux; \
 		armhf) export GOARM='6' ;; \
 		x86) export GO386='387' ;; \
 	esac; \
-	\
 	wget -O go.tgz "https://golang.org/dl/go$GOLANG_VERSION.src.tar.gz"; \
 	echo '0573a8df33168977185aa44173305e5a0450f55213600e94541604b75d46dc06 *go.tgz' | sha256sum -c -; \
 	tar -C /usr/local -xzf go.tgz; \
 	rm go.tgz; \
-	\
 	cd /usr/local/go/src; \
 	for p in /go-alpine-patches/*.patch; do \
 		[ -f "$p" ] || continue; \
 		patch -p2 -i "$p"; \
 	done; \
 	./make.bash; \
-	\
 	rm -rf /go-alpine-patches; \
 	apk del .build-deps; \
-	\
 	export PATH="/usr/local/go/bin:$PATH"; \
 	go version
 
