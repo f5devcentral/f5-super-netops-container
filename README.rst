@@ -11,7 +11,7 @@ Status
 About
 -----
 
-Super-NetOps is the new NetOps. This repo supports and auto-build integration
+Super-NetOps is the new NetOps. This repo supports an auto-build integration
 with Docker Hub.
 
 Docker Repo: https://hub.docker.com/r/f5devcentral/f5-super-netops-container/
