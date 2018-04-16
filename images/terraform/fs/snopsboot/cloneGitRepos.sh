@@ -15,5 +15,5 @@ if [ ! -d "/tmp/snops-repo" ]; then
 	git clone -b $SNOPS_GH_BRANCH $SNOPS_REPO /tmp/snops-repo >> /home/snops/log/cloneGitRepos.log 2>&1
 fi
 
-python /snopsboot/updateRepos.py /tmp/snops-repo/images/$SNOPS_IMAGE/fs/etc/snopsrepo.d/$SNOPS_IMAGE.json
+python /snopsboot/updateRepos.py /etc/snopsrepo.d/$SNOPS_IMAGE.json
 python /snopsboot/cloneGitRepos.py
